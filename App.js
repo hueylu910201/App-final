@@ -5,12 +5,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import {FontAwesome5} from '@expo/vector-icons';
 import HomeScreen2 from './src/HomeScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useRef } from 'react/cjs/react.production.min';
+import { useRef, useState } from 'react/cjs/react.production.min';
+import * as Animatable from 'react-native-animatable';
+import { Dimensions } from 'react-native-web';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+// import Animated from 'react-native-reanimated';
 
 const Tab = createBottomTabNavigator();
+const {width} = Dimensions.get('window');
+const TAB_BAR_WIDTH=width-16;
+const TAB_WIDTH=TAB_BAR_WIDTH/5;
+
 
 export default function App() {
-
+  // const [translateX]=useState(new Animated.Value(0));
   return (
     // <View style={styles.container}>
     //   <Text>Open up App.js to start working on your app!!</Text>
@@ -23,23 +31,34 @@ export default function App() {
           // tabBarActiveTintColor: 'primary700' ,
           //tabBarStyle: { backgroundColor: colorMode == 'light' ? 'white' : 'black' },
           // headerShown: false
+           tabBarStyle:{
+          position:'absolute',
+          height:60,
+          // bottom:16,
+          // borderRadius:10,
+          // left:16,
+          // right:16,
+
+        }
         }}
+
+       
       >
-          <Tab.Screen name="Home11" component={HomeScreen}
+          <Tab.Screen name="Home" component={HomeScreen}
             options={{
               tabBarIcon:({focused})=>(
-               <FontAwesome5 name="home" size={26} color={focused?'#00a4eb':'gray'}>
-
-               </FontAwesome5>
+                <View backgroundColor={focused?'#e6e8eb':'#fff'} style={styles.tabBarContainer}>
+                  <FontAwesome5 name="home" size={26} color={focused?'#00a4eb':'gray'} ></FontAwesome5>
+                </View>
               )
             }}
           />
           <Tab.Screen name="News" component={NewsScreen}
             options={{
               tabBarIcon:({focused})=>(
-               <FontAwesome5 name="newspaper" size={26} color={focused?'#00a4eb':'gray'}>
-
-               </FontAwesome5>
+                <View backgroundColor={focused?'#e6e8eb':'#fff'} style={styles.tabBarContainer}>
+                  <FontAwesome5 name="newspaper" size={26} color={focused?'#00a4eb':'gray'}></FontAwesome5>
+                </View>
               )
             }}
           
@@ -48,9 +67,9 @@ export default function App() {
           <Tab.Screen name="Map" component={MapScreen}
             options={{
               tabBarIcon:({focused})=>(
-               <FontAwesome5 name="map-marked-alt" size={26} color={focused?'#00a4eb':'gray'}>
-
-               </FontAwesome5>
+                <View backgroundColor={focused?'#e6e8eb':'#fff'} style={styles.tabBarContainer}>
+                  <FontAwesome5 name="map-marked-alt" size={26} color={focused?'#00a4eb':'gray'}></FontAwesome5>
+                </View>
               )
             }}
           
@@ -58,19 +77,21 @@ export default function App() {
           <Tab.Screen name="Notice" component={NoticeScreen}
             options={{
               tabBarIcon:({focused})=>(
-               <FontAwesome5 name="bell" size={26} color={focused?'#00a4eb':'gray'}>
+                <View backgroundColor={focused?'#e6e8eb':'#fff'}style={styles.tabBarContainer}>
+                  <FontAwesome5 name="bell" size={26} color={focused?'#00a4eb':'gray'}>
 
-               </FontAwesome5>
-              )
+                  </FontAwesome5>
+               </View>)
             }}
           />
           <Tab.Screen name="Settings" component={SettingsScreen}
             options={{
               tabBarIcon:({focused})=>(
-               <FontAwesome5 name="wrench" size={26} color={focused?'#00a4eb':'gray'}>
+                <View backgroundColor={focused?'#e6e8eb':'#fff'}style={styles.tabBarContainer}>
+                  <FontAwesome5 name="wrench" size={26} color={focused?'#00a4eb':'gray'}>
 
-               </FontAwesome5>
-              )
+                  </FontAwesome5>
+                </View> )
             }}
           />     
       </Tab.Navigator>
@@ -124,4 +145,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  tabBarContainer:{
+    width:TAB_WIDTH,
+    padding:10,
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor:Colors.gray,
+    alignItems:'center'
+  }
 });
